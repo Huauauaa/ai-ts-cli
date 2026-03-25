@@ -51,12 +51,35 @@ jobs:
       - name: Build package
         run: pnpm run build
 
+      - name: Resolve npm publish arguments
+        id: publish_args
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          ARGS="--access public --no-git-checks"
+
+          if [[ "$VERSION" == *-* ]]; then
+            PREID="${VERSION#*-}"
+            PREID="${PREID%%.*}"
+
+            # npm now requires an explicit dist-tag for prerelease versions.
+            if [[ -z "$PREID" || "$PREID" =~ ^[0-9]+$ ]]; then
+              PREID="next"
+            fi
+
+            ARGS="$ARGS --tag $PREID"
+            echo "Detected prerelease version $VERSION, publishing with dist-tag '$PREID'."
+          else
+            echo "Detected stable version $VERSION, publishing with default dist-tag 'latest'."
+          fi
+
+          echo "value=$ARGS" >> "$GITHUB_OUTPUT"
+
       - name: Publish to npm with token
         if: ${{ env.NPM_TOKEN != '' }}
-        run: pnpm publish --access public --no-git-checks
+        run: pnpm publish ${{ steps.publish_args.outputs.value }}
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
 
       - name: Publish to npm with trusted publishing
         if: ${{ env.NPM_TOKEN == '' }}
-        run: pnpm publish --access public --no-git-checks
+        run: pnpm publish ${{ steps.publish_args.outputs.value }}
