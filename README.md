@@ -11,8 +11,8 @@
 ### 本地开发
 
 ```bash
-npm install
-npm run build
+pnpm install
+pnpm run build
 node dist/index.js --name=Harvey
 ```
 
@@ -35,7 +35,7 @@ git push origin v0.1.0
 
 ### 2) GitHub Actions 发布 npm
 
-当发布 release（`published`）时，会自动执行 npm publish。
+当发布 release（`published`）时，会自动执行 pnpm publish。
 
 需要在仓库 `Settings > Secrets and variables > Actions` 中添加：
 
