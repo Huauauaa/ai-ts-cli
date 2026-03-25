@@ -1,0 +1,45 @@
+{
+  "name": "@harvey0379/vite-ts-cli",
+  "version": "0.1.0",
+  "description": "A CLI tool built with Vite + TypeScript",
+  "type": "module",
+  "bin": {
+    "harvey-cli": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "vite build && chmod +x dist/index.js",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm run typecheck",
+    "prepublishOnly": "pnpm run build"
+  },
+  "packageManager": "pnpm@10.32.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Huauauaa/ai-ts-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "typescript",
+    "vite"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Huauauaa/ai-ts-cli/issues"
+  },
+  "homepage": "https://github.com/Huauauaa/ai-ts-cli#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.2"
+  }
+}
