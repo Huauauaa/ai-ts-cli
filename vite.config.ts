@@ -9,6 +9,7 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     rollupOptions: {
+      treeshake: false,
       output: {
         format: "es",
         entryFileNames: "index.js",

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 function run(): void {
   const args = process.argv.slice(2);
   const nameArg = args.find((arg) => arg.startsWith("--name="));

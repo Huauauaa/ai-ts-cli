@@ -10,9 +10,8 @@
     "dist"
   ],
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "vite build && tsc --emitDeclarationOnly && chmod +x dist/index.js",
+    "build": "vite build && chmod +x dist/index.js",
     "dev": "vite build --watch",
     "typecheck": "tsc --noEmit",
     "test": "npm run typecheck",
