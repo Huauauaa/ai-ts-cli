@@ -16,11 +16,30 @@ pnpm run build
 node dist/index.js --name=Harvey
 ```
 
+输出当前环境版本信息：
+
+```bash
+node dist/index.js --env-info
+```
+
 或通过 bin 名称执行（全局安装或 npm link 后）：
 
 ```bash
 harvey-cli --name=Harvey
 ```
+
+```bash
+harvey-cli --env-info
+```
+
+`--env-info` 会输出当前环境中常见开发工具的版本信息，包括：
+
+- Java
+- Python
+- Node.js
+- npm
+- pnpm
+- Go
 
 ## 发布流程
 
