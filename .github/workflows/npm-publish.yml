@@ -17,6 +17,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Sync package version with tag
+        run: |
+          TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
+          VERSION="${TAG_NAME#v}"
+
+          if [ -z "$TAG_NAME" ] || [ -z "$VERSION" ]; then
+            echo "Unable to resolve tag name from workflow context."
+            exit 1
+          fi
+
+          if [ "$TAG_NAME" = "$VERSION" ]; then
+            echo "Tag must start with 'v', got: $TAG_NAME"
+            exit 1
+          fi
+
+          node -e "const fs=require('fs'); const p='package.json'; const pkg=JSON.parse(fs.readFileSync(p,'utf8')); pkg.version=process.argv[1]; fs.writeFileSync(p, JSON.stringify(pkg, null, 2)+'\n');" "$VERSION"
+          echo "Using package version: $VERSION (from tag: $TAG_NAME)"
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
