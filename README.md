@@ -35,11 +35,19 @@ git push origin v0.1.0
 
 ### 2) GitHub Actions 发布 npm
 
-当发布 release（`published`）时，会自动执行 pnpm publish。
+当发布 release（`published`）时，会自动执行 `pnpm publish --access public --no-git-checks`。
 
-需要在仓库 `Settings > Secrets and variables > Actions` 中添加：
+支持两种认证方式，满足其一即可：
 
-- `NPM_TOKEN`: npm access token（需有 publish 权限）
+1. `NPM_TOKEN`（兼容现有配置）
+   - 在仓库 `Settings > Secrets and variables > Actions` 中添加
+   - 值为 npm access token，且需要有 publish 权限
+
+2. npm trusted publishing（推荐）
+   - 在 npm 包页面的 `Settings -> Trusted publishing` 中配置 GitHub Actions
+   - workflow filename 填写：`npm-publish.yml`
+   - repository 填写当前仓库：`Huauauaa/ai-ts-cli`
+   - workflow 已开启 `id-token: write`，并使用 Node.js 24 以支持 OIDC 发布
 
 包名当前为：
 
